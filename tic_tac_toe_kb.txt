@@ -1,0 +1,64 @@
+((is_next 2 1))     # 2 == 1 + 1
+((is_prev 1 2))     # 1 == 2 - 1
+((is_next 3 2))     # 3 == 2 + 1
+((is_prev 2 3))     # 2 == 3 - 1
+
+((neq 1 2))
+((neq 2 1))
+((neq 1 3))
+((neq 3 1))
+((neq 2 3))
+((neq 3 2))
+
+((neq ?i1 ?i2) (neq ?i1 ?i3) (neq ?i2 ?i3) (uniq ?i1 ?i2 ?i3))
+
+
+((diag 1 1 2 2 3 3))
+((diag 1 3 2 2 3 1))
+((diag ?i1 ?j1 ?i2 ?j2 ?i3 ?j3) (diag ?i2 ?j2 ?i1 ?j1 ?i3 ?j3))
+((diag ?i1 ?j1 ?i2 ?j2 ?i3 ?j3) (diag ?i2 ?j2 ?i3 ?j3 ?i1 ?j1))
+((diag ?i1 ?j1 ?i2 ?j2 ?i3 ?j3) (diag ?i3 ?j3 ?i1 ?j1 ?i2 ?j2))
+((diag ?i1 ?j1 ?i2 ?j2 ?i3 ?j3) (diag ?i3 ?j3 ?i2 ?j2 ?i1 ?j1))
+
+((uniq ?i1 ?i2 ?i3) (aligned ?i1 ?j ?i2 ?j ?i3 ?j))
+((uniq ?j1 ?j2 ?j3) (aligned ?i ?j1 ?i ?j3 ?i ?j3))
+((diag ?i1 ?j1 ?i2 ?j2 ?i3 ?j3) (aligned ?i1 ?j1 ?i2 ?j2 ?3 ?j3))
+
+
+((aligned ?i1 ?j1 ?i2 ?j2 ?i3 ?j3) (occ ?i1 ?j1) (occ ?i2 ?j2) (blank ?i3 ?j3) (best_play ?i3 ?j3 3))
+((aligned ?i1 ?j1 ?i2 ?j2 ?i3 ?j3) (occ ?i1 ?j1) (blank ?i2 ?j2) (blank ?i3 ?j3) (best_play ?i3 ?j3 2))
+((aligned ?i1 ?j1 ?i2 ?j2 ?i2 ?j3) (blank ?i1 ?j1) (blank ?i2 ?j2) (blank ?i3 ?j3) (best_play ?i3 ?j3 1))
+
+
+((uniq ?i1 ?i2 ?i3) (occ ?i1 ?j ?c) (occ ?i2 ?j ?c) (blank ?i3 ?j) (best_play ?i3 ?j 3))                    # table[i1][j] = table[i2][j], table[i3][j] empty
+((uniq ?j1 ?j2 ?j3) (occ ?i ?j1 ?c) (occ ?i ?j2 ?c) (blank ?i ?j3) (best_play ?i ?j3 3))                    # table[i][j1] = table[i][j2], table[i2][j3] empty
+((diag ?i1 ?j1 ?i2 ?j2 ?i3 ?j3) (occ ?i1 ?j1 ?c) (occ ?i2 ?j2 ?c) (blank ?i3 ?j3) (best_play ?i3 ?j3 3))    # table[i1][j1] = table[i2][j2], table[i3][j3] empty
+
+((uniq ?i1 ?i2 ?i3) (occ ?i1 ?j) (blank ?i2 ?j) (blank ?i3 ?j) (best_play ?i3 ?j 2))                        # table[i2][j] = table[i3][j] = empty
+((uniq ?j1 ?j2 ?j3) (blank ?i ?j1) (blank ?i ?j2) (blank ?i ?j3) (best_play ?i3 ?j3 1))                       # all empty
+
+
+# reorder priorities
+
+((best_play ?i ?j 3) (should_play ?i ?j))
+((best_play ?i ?j 3) (best_play ?i2 ?j2 2) (should_play ?i ?j))
+((best_play ?i ?j 3) (best_play ?i2 ?j2 2) (best_play ?i3 ?j3 1) (should_play ?i ?j))
+((best_play ?i ?j 3) (best_play ?i2 ?j2 1) (should_play ?i ?j))
+
+((best_play ?i ?j 2) (should_play ?i ?j))
+((best_play ?i ?j 2) (best_play ?i2 ?j2 1) (should_play ?i ?j))
+
+((best_play ?i ?j 1) (should_play ?i ?j))
+
+
+((blank 1 1))
+((blank 1 2))
+((blank 1 3))
+
+((blank 2 1))
+((blank 2 2))
+((blank 2 2))
+
+((blank 3 3))
+((blank 3 3))
+((blank 3 3))

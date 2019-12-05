@@ -1,0 +1,10 @@
+#facts
+((mammal dog))
+((mammal cat))
+((bird penguin))
+((marry cat dog))
+
+((car ford))
+    #rules
+((mammal ?m) (animal ?m)) #forall m mammal(m) -> animal(m)
+((bird ?m) (animal ?m)) 
